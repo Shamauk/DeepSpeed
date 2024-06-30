@@ -12,6 +12,7 @@ from torch import nn
 from .layer import MoE
 
 
+# Has the assumption that every MoE Layer has the exact same number of experts 
 def has_moe_layers(m: nn.Module) -> Tuple[bool, int]:
     has_moe = False
     num_experts = 0

@@ -625,10 +625,10 @@ class InferenceEngine(Module):
             raise NotImplementedError("DeepSpeed does not support `num_beams` > 1, if this is important to you please "
                                       "add your request to: https://github.com/microsoft/DeepSpeed/issues/2506")
 
-        if ("input_ids" in kwargs) and (kwargs["input_ids"].dim() == 2):
+        if ("input_ids" in kwargs) and (kwargs["input_ids"].dim() == 2): # If we are giving multiple requests 
             for input_tensor in kwargs["input_ids"]:
                 tensor_length = input_tensor.shape[-1]
-                if tensor_length > self._config.max_out_tokens:
+                if tensor_length > self._config.max_out_tokens: # Our requests can't have more tokens than the maximum number of tokens in the response
                     raise RuntimeError(
                         f"Input with size {tensor_length} exceeds maximum length of {self._config.max_out_tokens}. Please increase `max_tokens` in the DeepSpeed Inference Config."
                     )
